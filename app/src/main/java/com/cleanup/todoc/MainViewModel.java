@@ -62,7 +62,7 @@ public class MainViewModel extends ViewModel {
       // ------------------
       
       public LiveData<List<Project>> getAllProjects() { return projectRepository.getAllProjects(); }
-      public Project getProjectById(long id){
+      public LiveData<Project> getProjectById(long id){
             return projectRepository.getProjectById(id);
       }
 }

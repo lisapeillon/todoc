@@ -19,7 +19,7 @@ public class ProjectRepository {
             return projectDao.getAllProjects();
       }
       
-      public Project getProjectById(long id){
+      public LiveData<Project> getProjectById(long id){
             return projectDao.getProjectById(id);
       }
 }

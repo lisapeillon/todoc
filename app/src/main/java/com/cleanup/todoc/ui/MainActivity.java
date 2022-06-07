@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
       private final ArrayList<Task> tasks = new ArrayList<>();
       
       // The adapter which handles the list of tasks
-      private final TasksAdapter adapter = new TasksAdapter(tasks, this);
+      private TasksAdapter adapter;
       
       // The sort method to be used to display tasks
       @NonNull
@@ -92,8 +93,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             lblNoTasks = binding.lblNoTask;
             listTasks = binding.listTasks;
             
-            listTasks.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-            listTasks.setAdapter(adapter);
+            configureRecyclerView();
             
             binding.fabAddTask.setOnClickListener(view -> showAddTaskDialog());
             
@@ -115,7 +115,13 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
       }
       
       private void getAllTasks(){
-            viewModel.getAllTasks().observe(this, allTasks -> updateTasks(allTasks));
+            viewModel.getAllTasks().observe(this, this::updateTasks);
+      }
+      
+      private void configureRecyclerView(){
+            adapter = new TasksAdapter(tasks, this, viewModel, this);
+            listTasks.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+            listTasks.setAdapter(adapter);
       }
       
       
@@ -147,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
       @Override
       public void onDeleteTask(Task task) {
             viewModel.deleteTask(task);
+            Toast.makeText(this, "La tâche a été supprimée", Toast.LENGTH_SHORT).show();
       }
       
       /**
@@ -171,11 +178,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
                   }
                   // If both project and name of the task have been set
                   else if (taskProject != null) {
-                        // TODO: Replace this by id of persisted task
-                        long id = (long) (Math.random() * 50000);
-                        
                         Task task = new Task(
-                              id,
                               taskProject.getId(),
                               taskName,
                               new Date().getTime()
@@ -214,6 +217,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
        */
       private void addTask(@NonNull Task task) {
             viewModel.insertTask(task);
+            Toast.makeText(this, "La tâche a été ajoutée", Toast.LENGTH_SHORT).show();
       }
       
       // Updates the list of tasks in the UI
