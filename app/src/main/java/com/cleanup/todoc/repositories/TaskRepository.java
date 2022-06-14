@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 
 import com.cleanup.todoc.data.TaskDao;
 import com.cleanup.todoc.model.Task;
+import com.cleanup.todoc.model.TaskAndProject;
 
 import java.util.List;
 
@@ -22,16 +23,12 @@ public class TaskRepository {
       }
       
       // ---- READ ----
-      public LiveData<List<Task>> getAllTasks(){ return taskDao.getAllTasks(); }
-      public LiveData<List<Task>> getTasksFromAToZ() { return taskDao.getTasksFromAToZ(); }
-      public LiveData<List<Task>> getTasksFromZToA() { return taskDao.getTasksFromZToA(); }
-      public LiveData<List<Task>> getTasksFromRecentToOld() { return taskDao.getTasksFromRecentToOld(); }
-      public LiveData<List<Task>> getTasksFromOldToRecent() { return taskDao.getTasksFromOldToRecent(); }
-      
-      // ---- UPDATE ----
-      public void updateTask(Task task){
-            taskDao.updateTask(task);
-      }
+      public LiveData<List<TaskAndProject>> getAllTasksAndProjects(){ return taskDao.getAllTasksAndProjects(); }
+      public LiveData<List<TaskAndProject>> getTasksFromAToZ() { return taskDao.getTasksFromAToZ(); }
+      public LiveData<List<TaskAndProject>> getTasksFromZToA() { return taskDao.getTasksFromZToA(); }
+      public LiveData<List<TaskAndProject>> getTasksFromRecentToOld() { return taskDao.getTasksFromRecentToOld(); }
+      public LiveData<List<TaskAndProject>> getTasksFromOldToRecent() { return taskDao.getTasksFromOldToRecent(); }
+
       
       // ---- DELETE ----
       public void deleteTask(Task task){

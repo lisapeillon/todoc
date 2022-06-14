@@ -29,9 +29,9 @@ public class Project {
       private final int color;
       
       
-      // --------------------
-      // ---- CONSRUCTOR ----
-      // --------------------
+      // -----------------------
+      // ---- CONSTRUCTOR ----
+      // -----------------------
       
       /**
        * Instantiates a new Project.

@@ -6,31 +6,35 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import com.cleanup.todoc.model.Task;
+import com.cleanup.todoc.model.TaskAndProject;
 
 import java.util.List;
 
 @Dao
 public interface TaskDao {
+      @Transaction
       @Query("SELECT * FROM Task")
-      LiveData<List<Task>> getAllTasks();
-      
+      LiveData<List<TaskAndProject>> getAllTasksAndProjects();
+
+      @Transaction
       @Query("SELECT * FROM Task ORDER BY name ASC")
-      LiveData<List<Task>> getTasksFromAToZ();
-      
+      LiveData<List<TaskAndProject>> getTasksFromAToZ();
+
+      @Transaction
       @Query("SELECT * FROM Task ORDER BY name DESC")
-      LiveData<List<Task>> getTasksFromZToA();
-      
+      LiveData<List<TaskAndProject>> getTasksFromZToA();
+
+      @Transaction
       @Query("SELECT * FROM Task ORDER BY creationTimestamp DESC")
-      LiveData<List<Task>> getTasksFromRecentToOld();
-      
+      LiveData<List<TaskAndProject>> getTasksFromRecentToOld();
+
+      @Transaction
       @Query("SELECT * FROM Task ORDER BY creationTimestamp ASC")
-      LiveData<List<Task>> getTasksFromOldToRecent();
-      
-      @Update
-      void updateTask(Task task);
+      LiveData<List<TaskAndProject>> getTasksFromOldToRecent();
       
       @Delete
       void deleteTask(Task task);

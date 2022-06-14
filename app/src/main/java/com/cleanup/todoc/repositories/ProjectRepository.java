@@ -18,8 +18,4 @@ public class ProjectRepository {
       public LiveData<List<Project>> getAllProjects(){
             return projectDao.getAllProjects();
       }
-      
-      public LiveData<Project> getProjectById(long id){
-            return projectDao.getProjectById(id);
-      }
 }

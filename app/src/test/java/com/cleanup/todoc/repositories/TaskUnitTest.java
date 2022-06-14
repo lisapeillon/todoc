@@ -1,25 +1,20 @@
 package com.cleanup.todoc.repositories;
 
+import static org.junit.Assert.assertSame;
+
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+import androidx.lifecycle.LiveData;
+
 import com.cleanup.todoc.injection.DI;
 import com.cleanup.todoc.model.Task;
-import com.cleanup.todoc.utils.LiveDataTestUtils;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
-import androidx.lifecycle.LiveData;
 
 /**
  * Unit tests for tasks
@@ -43,25 +38,6 @@ public class TaskUnitTest {
     public void setUp(){
         repository = DI.getNewInstanceTaskRepository();
         //Todo teester le dao
-    }
-    
-    @Test
-    public void getTasksWithSuccess() throws InterruptedException{
-        taskList = repository.getAllTasks();
-        result = LiveDataTestUtils.getValue(taskList);
-        assertTrue(result.size() == 0);
-        repository.insertTask(task1);
-        repository.insertTask(task2);
-        taskList = repository.getAllTasks();
-        result = LiveDataTestUtils.getValue(taskList);
-        assertTrue(result.size() == 2);
-    }
-    
-    @Test
-    public void insertTaskWithSuccess() throws InterruptedException{
-        taskList = repository.getAllTasks();
-        result = LiveDataTestUtils.getValue(taskList);
-        assertTrue(result.size() == 0);
     }
 
     @Test

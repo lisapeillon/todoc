@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
+import com.cleanup.todoc.model.TaskAndProject;
 import com.cleanup.todoc.repositories.ProjectRepository;
 import com.cleanup.todoc.repositories.TaskRepository;
 
@@ -39,16 +40,11 @@ public class MainViewModel extends ViewModel {
       }
       
       // ---- READ ----
-      public LiveData<List<Task>> getAllTasks(){ return taskRepository.getAllTasks(); }
-      public LiveData<List<Task>> getTasksFromAToZ() { return taskRepository.getTasksFromAToZ(); }
-      public LiveData<List<Task>> getTasksFromZToA() { return taskRepository.getTasksFromZToA(); }
-      public LiveData<List<Task>> getTasksFromRecentToOld() { return taskRepository.getTasksFromRecentToOld(); }
-      public LiveData<List<Task>> getTasksFromOldToRecent() { return taskRepository.getTasksFromOldToRecent(); }
-      
-      // ---- UPDATE ----
-      public void updateTask(Task task) {
-            executor.execute(() -> taskRepository.updateTask(task));
-      }
+      public LiveData<List<TaskAndProject>> getAllTasksAndProjects(){ return taskRepository.getAllTasksAndProjects(); }
+      public LiveData<List<TaskAndProject>> getTasksFromAToZ() { return taskRepository.getTasksFromAToZ(); }
+      public LiveData<List<TaskAndProject>> getTasksFromZToA() { return taskRepository.getTasksFromZToA(); }
+      public LiveData<List<TaskAndProject>> getTasksFromRecentToOld() { return taskRepository.getTasksFromRecentToOld(); }
+      public LiveData<List<TaskAndProject>> getTasksFromOldToRecent() { return taskRepository.getTasksFromOldToRecent(); }
       
       // ---- DELETE ----
       public void deleteTask(Task task){
@@ -62,7 +58,4 @@ public class MainViewModel extends ViewModel {
       // ------------------
       
       public LiveData<List<Project>> getAllProjects() { return projectRepository.getAllProjects(); }
-      public LiveData<Project> getProjectById(long id){
-            return projectRepository.getProjectById(id);
-      }
 }
