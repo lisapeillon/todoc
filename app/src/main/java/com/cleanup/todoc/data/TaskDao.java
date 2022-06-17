@@ -1,5 +1,7 @@
 package com.cleanup.todoc.data;
 
+import static androidx.room.OnConflictStrategy.REPLACE;
+
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -39,6 +41,6 @@ public interface TaskDao {
       @Delete
       void deleteTask(Task task);
       
-      @Insert(onConflict = OnConflictStrategy.REPLACE)
+      @Insert(onConflict = REPLACE)
       void insertTask(Task task);
 }
