@@ -2,12 +2,9 @@ package com.cleanup.todoc.model;
 
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
-import java.util.Comparator;
 
 /**
  * Model for the tasks of the application.
@@ -16,23 +13,19 @@ import java.util.Comparator;
 @Entity
 public class Task {
     // The unique identifier of the task
-    @PrimaryKey(autoGenerate = true)
-    private long id;
+    @PrimaryKey(autoGenerate = true) private long id;
 
     // The unique identifier of the project associated to the task
-    @ColumnInfo
-    private long projectId;
+    @ColumnInfo private long projectId;
 
     // The name of the task
     // Suppress warning because setName is called in constructor
     @SuppressWarnings("NullableProblems")
     @NonNull
-    @ColumnInfo
-    private String name;
+    @ColumnInfo private String name;
 
     //The timestamp when the task has been created
-    @ColumnInfo
-    private long creationTimestamp;
+    @ColumnInfo private long creationTimestamp;
 
     
     

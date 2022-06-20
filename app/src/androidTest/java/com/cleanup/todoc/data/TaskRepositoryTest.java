@@ -4,11 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import android.content.Context;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.room.Room;
-import androidx.room.RoomDatabase;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
@@ -26,7 +23,6 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @RunWith(AndroidJUnit4.class)
@@ -64,6 +60,7 @@ public class TaskRepositoryTest {
 
       @Test
       public void insertAndGetTasks() throws InterruptedException {
+            // Insert another task
             executor.execute(() -> taskRepository.insertTask(task4));
             // Get the LiveData<List> of all tasks saved in the database
             LiveData<List<TaskAndProject>> taskAndProjectLiveDataList = taskRepository.getAllTasksAndProjects();

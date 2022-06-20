@@ -8,11 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cleanup.todoc.MainViewModel;
 import com.cleanup.todoc.R;
 import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
@@ -25,141 +22,140 @@ import java.util.List;
  * @author Gaëtan HERFRAY
  */
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHolder> {
-          // The list of tasks the adapter deals with
-          @NonNull
-          private List<TaskAndProject> taskAndProjects;
+      // The list of tasks the adapter deals with
+      @NonNull
+      private List<TaskAndProject> taskAndProjects;
 
 
 
 
-          // ------------------
-          // ---- CALLBACK ----
-          // ------------------
+      // ------------------
+      // ---- CALLBACK ----
+      // ------------------
 
-          //The listener for when a task needs to be deleted
-          @NonNull
-          private final DeleteTaskListener deleteTaskListener;
+      //The listener for when a task needs to be deleted
+      @NonNull
+      private final DeleteTaskListener deleteTaskListener;
 
-          // Listener for deleting task
-          public interface DeleteTaskListener {
-                    /**
-                     * Called when a task needs to be deleted.
-                     * @param task the task that needs to be deleted
-                     */
-                    void onDeleteTask(Task task);
-          }
-
-
-
-
-          // -----------------
-          // ---- ADAPTER ----
-          // -----------------
-          /**
-           * Instantiates a new TasksAdapter.
-           * @param taskAndProjects the list of tasks the adapter deals with to set
-           */
-          public TasksAdapter(@NonNull final List<TaskAndProject> taskAndProjects, @NonNull final DeleteTaskListener deleteTaskListener) {
-                    this.taskAndProjects = taskAndProjects;
-                    this.deleteTaskListener = deleteTaskListener;
-          }
+      // Listener for deleting task
+      public interface DeleteTaskListener {
+            /**
+             * Called when a task needs to be deleted.
+             * @param task the task that needs to be deleted
+             */
+            void onDeleteTask(Task task);
+      }
 
 
 
-          // --------------------
-          // ---- VIEWHOLDER ----
-          // --------------------
 
-          /**
-           * ViewHolder for task items in the tasks list
-           * @author Gaëtan HERFRAY
-           */
-          class TaskViewHolder extends RecyclerView.ViewHolder {
-                    //The circle icon showing the color of the project
-                    private final AppCompatImageView imgProject;
+      // -----------------
+      // ---- ADAPTER ----
+      // -----------------
+      /**
+       * Instantiates a new TasksAdapter.
+       * @param taskAndProjects the list of tasks the adapter deals with to set
+       */
+      public TasksAdapter(@NonNull final List<TaskAndProject> taskAndProjects, @NonNull final DeleteTaskListener deleteTaskListener) {
+            this.taskAndProjects = taskAndProjects;
+            this.deleteTaskListener = deleteTaskListener;
+      }
 
-                    // The TextView displaying the name of the task
-                    private final TextView lblTaskName;
 
-                    //The TextView displaying the name of the project
-                    private final TextView lblProjectName;
 
-                    //The delete icon
-                    private final AppCompatImageView imgDelete;
+      // --------------------
+      // ---- VIEWHOLDER ----
+      // --------------------
 
-                    //The listener for when a task needs to be deleted
-                    private final DeleteTaskListener deleteTaskListener;
+      /**
+       * ViewHolder for task items in the tasks list
+       * @author Gaëtan HERFRAY
+       */
+      class TaskViewHolder extends RecyclerView.ViewHolder {
+            //The circle icon showing the color of the project
+            private final AppCompatImageView imgProject;
 
-                    /**
-                     * Instantiates a new TaskViewHolder.
-                     * @param itemView the view of the task item
-                     * @param deleteTaskListener the listener for when a task needs to be deleted to set
-                     */
-                    TaskViewHolder(@NonNull View itemView, @NonNull DeleteTaskListener deleteTaskListener) {
-                              super(itemView);
+            // The TextView displaying the name of the task
+            private final TextView lblTaskName;
 
-                              this.deleteTaskListener = deleteTaskListener;
+            //The TextView displaying the name of the project
+            private final TextView lblProjectName;
 
-                              imgProject = itemView.findViewById(R.id.img_project);
-                              lblTaskName = itemView.findViewById(R.id.lbl_task_name);
-                              lblProjectName = itemView.findViewById(R.id.lbl_project_name);
-                              imgDelete = itemView.findViewById(R.id.img_delete);
-                    }
+            //The delete icon
+            private final AppCompatImageView imgDelete;
 
-                    /**
-                     * Binds a task to the item view.
-                     * @param taskAndProject the task to bind in the item view
-                     */
-                    void bind(TaskAndProject taskAndProject) {
-                              Task task = taskAndProject.getTask();
-                              Project project = taskAndProject.getProject();
+            //The listener for when a task needs to be deleted
+            private final DeleteTaskListener deleteTaskListener;
 
-                              lblTaskName.setText(task.getName());
+            /**
+             * Instantiates a new TaskViewHolder.
+             * @param itemView the view of the task item
+             * @param deleteTaskListener the listener for when a task needs to be deleted to set
+             */
+            TaskViewHolder(@NonNull View itemView, @NonNull DeleteTaskListener deleteTaskListener) {
+                  super(itemView);
 
-                              if(project != null){
-                                        imgProject.setSupportImageTintList(ColorStateList.valueOf(project.getColor()));
-                                        lblProjectName.setText(project.getName());
-                              } else {
-                                        imgProject.setVisibility(View.INVISIBLE);
-                                        lblProjectName.setText("");
-                              }
+                  this.deleteTaskListener = deleteTaskListener;
 
-                              imgDelete.setOnClickListener(view -> TaskViewHolder.this.deleteTaskListener.onDeleteTask(task));
-                    }
-          }
+                  imgProject = itemView.findViewById(R.id.img_project);
+                  lblTaskName = itemView.findViewById(R.id.lbl_task_name);
+                  lblProjectName = itemView.findViewById(R.id.lbl_project_name);
+                  imgDelete = itemView.findViewById(R.id.img_delete);
+            }
 
-          @NonNull
-          @Override
-          public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-                    View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_task, viewGroup, false);
-                    return new TaskViewHolder(view, deleteTaskListener);
-          }
+            /**
+             * Binds a task to the item view.
+             * @param taskAndProject the task to bind in the item view
+             */
+            void bind(TaskAndProject taskAndProject) {
+                  Task task = taskAndProject.getTask();
+                  Project project = taskAndProject.getProject();
 
-          @Override
-          public void onBindViewHolder(@NonNull TaskViewHolder taskViewHolder, int position) {
-                    taskViewHolder.bind(taskAndProjects.get(position));
-          }
+                  lblTaskName.setText(task.getName());
 
-          @Override
-          public int getItemCount() {
-                    return taskAndProjects.size();
-          }
+                  if(project != null){
+                        imgProject.setSupportImageTintList(ColorStateList.valueOf(project.getColor()));
+                        lblProjectName.setText(project.getName());
+                  } else {
+                        imgProject.setVisibility(View.INVISIBLE);
+                        lblProjectName.setText("");
+                  }
+                  imgDelete.setOnClickListener(view -> deleteTaskListener.onDeleteTask(task));
+            }
+      }
 
+      @NonNull
+      @Override
+      public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_task, viewGroup, false);
+            return new TaskViewHolder(view, deleteTaskListener);
+      }
+
+      @Override
+      public void onBindViewHolder(@NonNull TaskViewHolder taskViewHolder, int position) {
+            taskViewHolder.bind(taskAndProjects.get(position));
+      }
+
+      @Override
+      public int getItemCount() {
+            return taskAndProjects.size();
+      }
 
 
 
 
 
-          // -----------------
-          // ---- ACTIONS ----
-          // -----------------
 
-          /**
-           * Updates the list of tasks the adapter deals with.
-           * @param taskAndProjects the list of tasks the adapter deals with to set
-           */
-          void updateTasks(@NonNull final List<TaskAndProject> taskAndProjects) {
-                    this.taskAndProjects = taskAndProjects;
-                    notifyDataSetChanged();
-          }
+      // -----------------
+      // ---- ACTIONS ----
+      // -----------------
+
+      /**
+       * Updates the list of tasks the adapter deals with.
+       * @param taskAndProjects the list of tasks the adapter deals with to set
+       */
+      void updateTasks(@NonNull final List<TaskAndProject> taskAndProjects) {
+            this.taskAndProjects = taskAndProjects;
+            notifyDataSetChanged();
+      }
 }
